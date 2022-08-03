@@ -47,6 +47,9 @@ const menu = (
 
 
 const style: React.CSSProperties = { background: '#ffffff', padding: '8px 0' };
+
+const styleContainer: React.CSSProperties = { background: '#ffffff', padding: '8px' };
+
 interface DataType {
   key: string;
   name: string;
@@ -283,7 +286,9 @@ const FirstTable = () => {
   }
 
   return (
+ 
   <>
+  <div style={styleContainer}>
     <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
     
       <Col className="gutter-row" span={4}>
@@ -337,7 +342,7 @@ const FirstTable = () => {
       <Col span={24}><Table columns={columns} dataSource={dataSource} /></Col>
 
     </Row>
-
+    </div>
   </>
 )};
 
