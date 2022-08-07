@@ -50,6 +50,12 @@ const style: React.CSSProperties = { background: '#ffffff', padding: '8px 0' };
 
 const styleContainer: React.CSSProperties = { background: '#ffffff', padding: '8px' };
 
+const data1 = {
+  from: "Link #1",
+  message: "Welcome to KindaCode.com",
+  timestamp: Date.now(),
+};
+
 interface DataType {
   key: string;
   name: string;
@@ -103,7 +109,7 @@ const columns: ColumnsType<DataType> = [
         <a>Invite {record.name}</a>
         <a>Delete</a>
 
-        <Link to="/abouts">
+        <Link to="/abouts" state={record.name}>
           About
         </Link> 
 
