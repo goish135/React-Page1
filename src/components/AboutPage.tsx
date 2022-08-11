@@ -1,5 +1,5 @@
 import { useLocation, Link } from "react-router-dom";
-import {  Table, Tag } from 'antd';
+import {  Table, Tag,Button } from 'antd';
 import {useState} from 'react';
 
 const AboutPage = (props:any) => {
@@ -7,6 +7,7 @@ const AboutPage = (props:any) => {
   const [alreadySelectedRows,setAlreadySelectedRows] = useState(['1','3']);
 
   const styleContainer: React.CSSProperties = { background: '#ffffff', padding: '8px' };
+  const [rowClickItem,setRowClickItem] = useState<number>(1);
 
   interface dataT{
     formId: string;
@@ -16,6 +17,39 @@ const AboutPage = (props:any) => {
   const state= location.state as string;
   console.log(state);
 
+  const onAddSelectedItem = ()=>{
+    const randomNumber = parseInt((Math.random()*1000).toString())
+    const newItem = {
+      // key:randomNumber.toString(),
+      // id:randomNumber,
+      // name:'Name '+randomNumber,
+      // grade: 'Grade '+randomNumber,
+      key:(dataSource.length+1).toString(),
+      id:dataSource[rowClickItem].id,
+      name:dataSource[rowClickItem].name,
+      grade: dataSource[rowClickItem].grade,
+    }
+    setDataSource(pre=>{
+      const newDatatSource = [...pre]
+
+      
+      console.log('re Order',rowClickItem)
+      // 遇到重複的(選取的) ,add twice (self+copySelf)
+      const reOrderDatatSource = []
+      for(let i=0;i<dataSource.length;i++)
+      {
+        reOrderDatatSource.push(dataSource[i])
+        if(i==rowClickItem){
+          console.log('copy this(add twice)',rowClickItem)
+          reOrderDatatSource.push(newItem)
+        }
+      }
+      // return [...pre,newItem]
+      return reOrderDatatSource
+    }
+      
+    )
+  }
   const columns = [
     {
       title: 'Student ID',
@@ -35,7 +69,7 @@ const AboutPage = (props:any) => {
     }       
   ]
 
-  const dataSource = [
+  const [dataSource,setDataSource] = useState([
     {
       key:'1',
       id:1,
@@ -66,7 +100,7 @@ const AboutPage = (props:any) => {
       name:'Student Name 5',
       grade: 'A',
     },                 
-  ]
+  ])
 
   return (
     <>
@@ -81,11 +115,28 @@ const AboutPage = (props:any) => {
         </div>
       {/* )} */}
       <hr />
-      <Link to="/">Go Home</Link>
+      <Link to="/">Go Home</Link> <hr/>
+      <Button onClick={onAddSelectedItem}>Add Selected-copy Item</Button>
       <div style={styleContainer}>
         <Table 
+
+
+        onRow={(record, rowIndex) => {
+          return {
+            onClick: event => {
+              console.log('onRow Click?',rowIndex)
+              setRowClickItem(rowIndex as number)
+            }, // click row
+            onDoubleClick: event => {}, // double click row
+            onContextMenu: event => {}, // right button click row
+            onMouseEnter: event => {}, // mouse enter row
+            onMouseLeave: event => {}, // mouse leave row
+          }; 
+        }} 
+
         columns={columns}
         dataSource={dataSource}
+        
         rowSelection={{
           type:'checkbox',
           selectedRowKeys:alreadySelectedRows,
