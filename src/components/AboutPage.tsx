@@ -7,7 +7,7 @@ const AboutPage = (props:any) => {
   const [alreadySelectedRows,setAlreadySelectedRows] = useState(['1','3']);
 
   const styleContainer: React.CSSProperties = { background: '#ffffff', padding: '8px' };
-  const [rowClickItem,setRowClickItem] = useState<number>(1);
+  const [rowClickItem,setRowClickItem] = useState<number>(-1);
 
   interface dataT{
     formId: string;
@@ -133,6 +133,8 @@ const AboutPage = (props:any) => {
             onMouseLeave: event => {}, // mouse leave row
           }; 
         }} 
+
+        rowClassName={(record,index)=>index===rowClickItem?"johnting-selected":""}
 
         columns={columns}
         dataSource={dataSource}

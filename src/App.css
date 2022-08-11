@@ -28,6 +28,23 @@
   color: #61dafb;
 }
 
+.ant-table-tbody > tr.ant-table-row-selected > td {
+  background: white;
+  /* border-color: rgba(0, 0, 0, 0.03); */
+}
+.ant-table-tbody > tr.ant-table-row-selected:hover > td {
+  background: white;
+}
+
+.ant-table-tbody > tr.johnting-selected > td {
+  background: #eeff00;
+  /* border-color: rgba(0, 0, 0, 0.03); */
+}
+.ant-table-tbody > tr.johnting-selected:hover > td {
+  background: #eeff00;
+  border-color: rgba(0, 0, 0, 0.03);
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
