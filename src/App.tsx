@@ -11,7 +11,7 @@ import Test from "./components/Test";
 export default function App() {
 
     return (
-        <BrowserRouter>
+        <BrowserRouter basename={'https://goish135.github.io/React-Page1/'}>
         <Routes>
           {/* <Route path="/" element={<Layout />}> */}
             {/* <Route index element={<Home />} /> */}
