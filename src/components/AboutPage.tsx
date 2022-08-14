@@ -1,10 +1,28 @@
 import { useLocation, Link } from "react-router-dom";
-import {  Table, Tag,Button } from 'antd';
+import {  Table, Tag,Button,Space } from 'antd';
 import {useState} from 'react';
+
+
 
 const AboutPage = (props:any) => {
 
   const [alreadySelectedRows,setAlreadySelectedRows] = useState(['1','3']);
+
+  const styleMaindiv: React.CSSProperties = {  width: '100%',display:'flex',flexWrap:'wrap',height:'100%',border:'solid'};
+  const styleHalfdiv: React.CSSProperties = {  width: '48%',margin:'1%',height:'100%',border:'solid',display:'block'};
+  const styleRightdiv: React.CSSProperties = {  width: '48%',margin:'1%',border:'solid',display:'block'};
+
+  // const styleFieldSet: React.CSSProperties = { border:'solid',width:'50%',margin:'auto',textAlign:'center'};
+  const styleFieldSet: React.CSSProperties = { border:'solid',padding:'10px',height:'100%',margin:'0 5px'};
+  // const result: React.CSSProperties = { marginLeft:'15px'};
+  const styleLegend: React.CSSProperties = {     background: 'black',
+    color: 'white',
+    padding: '6px',
+    width:'fit-content',
+    borderRadius:'5px',
+    marginLeft: '10px'
+    
+  };
 
   const styleContainer: React.CSSProperties = { background: '#ffffff', padding: '8px' };
   const [rowClickItem,setRowClickItem] = useState<number>(-1);
@@ -115,8 +133,10 @@ const AboutPage = (props:any) => {
         </div>
       {/* )} */}
       <hr />
-      <Link to="/">Go Home</Link> <hr/>
-      <Button onClick={onAddSelectedItem}>Add Selected-copy Item</Button>
+      <Space>
+      <Button><Link to="/">Back</Link></Button> <br/>
+      <Button onClick={onAddSelectedItem} type="primary">Add Selected-copy Item</Button>
+      </Space>
       <div style={styleContainer}>
         <Table 
 
@@ -188,9 +208,23 @@ const AboutPage = (props:any) => {
         >
 
         </Table> 
+        <br/>
+        <div style={styleMaindiv}>
+          
+          <div style={styleHalfdiv}>
         {/* {alreadySelectedRows.map(x=>dataSource[parseInt(x)-1].name).join(',')} */}
-        {alreadySelectedRows.map(x=>(<p key={parseInt(x)-1}>{dataSource[parseInt(x)-1].name}</p>))}
+
+        <fieldset style={styleFieldSet}><legend style={styleLegend}>Selected student:</legend><div>{alreadySelectedRows.map(x=>(<p key={parseInt(x)-1}>{dataSource[parseInt(x)-1].name}</p>))}</div></fieldset>
+          </div>
+          <div style={styleRightdiv}>
+        {/* {alreadySelectedRows.map(x=>dataSource[parseInt(x)-1].name).join(',')} */}
+        <fieldset style={styleFieldSet}><legend style={styleLegend}>Remark:</legend><div></div></fieldset>
+          </div>
+          
         {/* {dataSource[0].name} */}
+        
+        </div>
+        
       </div>  
     </>
   );
