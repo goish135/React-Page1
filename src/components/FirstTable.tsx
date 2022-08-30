@@ -50,6 +50,10 @@ const style: React.CSSProperties = { background: '#ffffff', padding: '8px 0' };
 
 const styleContainer: React.CSSProperties = { background: '#ffffff', padding: '8px' };
 
+
+
+
+
 const data1 = {
   from: "Link #1",
   message: "Welcome to KindaCode.com",
@@ -158,6 +162,21 @@ const columns: ColumnsType<DataType> = [
 // ];
 const FirstTable = () => {
   
+  
+  /*
+  const [curPage,setCurPage] = useState(()=>{
+    let a = JSON.parse(localStorage.getItem("myData") as string);
+    console.log('test:',a);
+    return a || "";
+  })*/
+
+  const [curPage, setCurPage] = useState(() => {
+    let sCurPage = parseInt(localStorage.getItem("curPage") as string) 
+    return isNaN(sCurPage) ? 0: sCurPage;
+  });
+
+
+  //const [curPage, setCurPage] = useState(-1);
 
   const [filterInput, setFilterInput] = useState('');
   const [tech, setTech] = useState('');
@@ -193,6 +212,50 @@ const FirstTable = () => {
   //   address: string;
   // }
   
+  /*
+  useEffect(() => {
+    let sCurPage = parseInt(localStorage.getItem("curPage") as string);
+    if(isNaN(sCurPage)) {
+      sCurPage = 0;
+      localStorage.setItem("curPage", sCurPage.toString());
+    }
+    console.log('sCurPage:', sCurPage);
+    console.log('curPage:', curPage);
+    if(curPage === -1) {
+      setCurPage(sCurPage)
+    } else {
+      localStorage.setItem("curPage", curPage.toString());
+    }
+}, [curPage]);*/
+
+
+useEffect(() => {
+  localStorage.setItem("curPage", curPage.toString());
+}, [curPage]);
+
+/*
+bad timeline
+curPage = useState(0)
+localStorage.setItem("curPage", curPage)
+console.log(localStorage.getItem("curPage"))
+
+
+good timeline
+curPage = useState(-1)
+scurPage = localStorage.getItem("curPage") 
+if curPage == -1 
+  curPage = scurPage
+else 
+  localStorage.setItem("curPage", curPage)
+*/
+
+/*
+  useEffect(() => {
+       let a = JSON.parse(localStorage.getItem("myData") as string);
+       console.log('getItem:',a);
+       // console.log(localStorage.key(0));
+  }, []);*/
+
   useEffect(()=>{
     axios
     .get("./fake/address.json")
@@ -205,6 +268,25 @@ const FirstTable = () => {
     });
 
   },[]);
+
+  useEffect(()=>{
+    axios
+    .get("./fake/person.json")
+    .then((res)=>{
+      const data = res.data as DataType[]
+      console.log(data);
+      
+      const results = data.filter(elememt=>{
+       return ((!tech || elememt.name.includes(tech)) && (!address || elememt.address.includes(address)));
+     });
+     //console.log(results);
+      // setData(data);
+      setDataSource(results);
+    })
+    .catch((error)=>{
+      console.log(error);
+    });
+  },[])
 
   
   // useEffect(()=>{
@@ -234,7 +316,6 @@ const FirstTable = () => {
    });
    console.log(results);
    setDataSource(results);
-    
   };
 
 
@@ -345,7 +426,13 @@ const FirstTable = () => {
 
 
     <Row>
-      <Col span={24}><Table columns={columns} dataSource={dataSource} /></Col>
+      <Col span={24}><Table columns={columns} dataSource={dataSource} pagination={ {pageSize:1,
+        defaultCurrent: curPage,
+        onChange(curPage,pageSize){
+          setCurPage(curPage);
+          console.log('curPage:',curPage);
+          console.log(pageSize);
+        }} } /></Col>
 
     </Row>
     </div>
