@@ -2,10 +2,19 @@ import { useLocation, Link } from "react-router-dom";
 import {  Table, Tag,Button,Space } from 'antd';
 import {useState} from 'react';
 import { useSearchParams } from "react-router-dom";
-
-
+import fileDownload from 'js-file-download'
+import axios from 'axios'
 
 const AboutPage = (props:any) => {
+
+  const handleDownloadClick = (url:string, filename:string) => {
+    axios.get(url, {
+      responseType: 'blob',
+    })
+    .then((res:any) => {
+      fileDownload(res.data, filename)
+    })
+  }
   const [searchParams, setSearchParams] = useSearchParams();
   console.log(searchParams.get("formId"))
   const params = [];
@@ -153,6 +162,9 @@ const AboutPage = (props:any) => {
       <Space>
       <Button><Link to="/">Back</Link></Button> <br/>
       <Button onClick={onAddSelectedItem} type="primary">Add Selected-copy Item</Button>
+      {/* <a href="https://raw.githubusercontent.com/goish135/Relax/master/%E4%B8%80%E6%8B%B3%E8%B6%85%E4%BA%BA.png" download><Button type="primary">Download</Button></a> */}
+      <Button onClick={()  => handleDownloadClick('https://raw.githubusercontent.com/goish135/Relax/master/%E4%B8%80%E6%8B%B3%E8%B6%85%E4%BA%BA.png', 'onePunch')}>
+        Download the File</Button>
       </Space>
       <div style={styleContainer}>
         <Table 
