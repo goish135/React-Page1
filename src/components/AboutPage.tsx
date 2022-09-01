@@ -7,7 +7,7 @@ import { useSearchParams } from "react-router-dom";
 
 const AboutPage = (props:any) => {
   const [searchParams, setSearchParams] = useSearchParams();
-
+  console.log(searchParams.get("formId"))
   const params = [];
 
   for(let entry of searchParams.entries() as any) {
