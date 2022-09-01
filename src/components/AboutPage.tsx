@@ -1,10 +1,18 @@
 import { useLocation, Link } from "react-router-dom";
 import {  Table, Tag,Button,Space } from 'antd';
 import {useState} from 'react';
+import { useSearchParams } from "react-router-dom";
 
 
 
 const AboutPage = (props:any) => {
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const params = [];
+
+  for(let entry of searchParams.entries() as any) {
+    params.push(entry);
+  }
 
   const [alreadySelectedRows,setAlreadySelectedRows] = useState(['1','3']);
 
@@ -122,6 +130,15 @@ const AboutPage = (props:any) => {
 
   return (
     <>
+      <h1>Params</h1>
+      <ul>
+        {params.map(([key, value]) => (
+          <li key={key}>{key} - {value}</li>
+        ))}
+
+        
+      </ul>
+
       <h1>This is About page</h1>
       {/* {state && ( */}
         <div>
